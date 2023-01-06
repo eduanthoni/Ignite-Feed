@@ -14,9 +14,9 @@ const posts = [
       role: "Full-Stack Engineer"
     },
     content: [
-      {type: 'paragraph', content: 'Fala galeraa 👋'},
-      {type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀'},
-      {type: 'link', content: '👉 jane.design/doctorcare'}
+      {type: 'paragraph', info: 'Fala galeraa 👋'},
+      {type: 'paragraph', info: 'Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀'},
+      {type: 'link', info: '👉 jane.design/doctorcare'}
     ],
     publishedAt: new Date('2022-05-10 20:00:00')
   },
@@ -28,7 +28,7 @@ const posts = [
       role: "Junior Developer"
     },
     content: [
-      {type: 'paragraph', content: 'Apenas uma linha para testar. Olá a todos'},
+      {type: 'paragraph', info: 'Apenas uma linha para testar. Olá a todos'},
     ],
     publishedAt: new Date('2023-01-06 10:17:59')
   }
