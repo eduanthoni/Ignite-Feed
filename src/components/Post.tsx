@@ -1,6 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
@@ -34,7 +34,7 @@ export function Post({author, content, publishedAt}: postProps) {
 
 	const [newCommentText, setNewCommentText] = useState('');
 
-	function handleAddNewComment(e: any) {
+	function handleAddNewComment(e: FormEvent) {
 		e.preventDefault();
 
 		setComment([...comment, newCommentText]);
@@ -42,7 +42,7 @@ export function Post({author, content, publishedAt}: postProps) {
 		setNewCommentText('');
 	}
 
-	function handleNewCommentChange(e: any){
+	function handleNewCommentChange(e: ChangeEvent<HTMLTextAreaElement>){
 		setNewCommentText(e.target.value);
 	}
 
