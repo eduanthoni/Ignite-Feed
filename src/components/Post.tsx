@@ -1,6 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { Info } from 'phosphor-react';
+import { useState } from 'react';
 
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
@@ -20,6 +20,7 @@ type postProps = {
 }
 
 export function Post({author, content, publishedAt}: postProps) {
+
 	const formattedPublishedDate = format(publishedAt, "d 'de' MMMM 'às' HH:mm'h'", {
 		locale: ptBR
 	});
@@ -27,7 +28,31 @@ export function Post({author, content, publishedAt}: postProps) {
 	const comparedPublishedAt = formatDistanceToNow(publishedAt, {
 		locale: ptBR,
 		addSuffix: true
-	})
+	});
+
+	const [comment, setComment] = useState(['alo']);
+
+	const [newCommentText, setNewCommentText] = useState('');
+
+	function handleAddNewComment(e: any) {
+		e.preventDefault();
+
+		setComment([...comment, newCommentText]);
+
+		setNewCommentText('');
+	}
+
+	function handleNewCommentChange(e: any){
+		setNewCommentText(e.target.value);
+	}
+
+	function deleteComment(commentToDelete: string) {
+		const commentsWithoutDeleted = comment.filter(comment => {
+			return comment !== commentToDelete;
+		});
+
+		setComment(commentsWithoutDeleted);
+	}
 	
 	return (
 		<article className={style.post}>
@@ -48,18 +73,20 @@ export function Post({author, content, publishedAt}: postProps) {
 			<div className={style.content}>
 				{content.map(item => {
 					if(item.type === 'paragraph') {
-						return <p>{item.info}</p>
+						return <p key={item.info}>{item.info}</p>
 					} else if (item.type === 'link') {
-						return <p><a href='#'>{item.info}</a></p>
+						return <p key={item.info}><a href='#'>{item.info}</a></p>
 					}
 				})}
 			</div>
 
-			<form className={style.commentSection}>
+			<form onSubmit={handleAddNewComment} className={style.commentSection}>
 				<strong>Deixe seu feedback</strong>
 				
 				<textarea 
 					placeholder='Deixe um comentário'
+					onChange={handleNewCommentChange}
+					value={newCommentText}
 				/>
 
 				<footer>
@@ -69,8 +96,13 @@ export function Post({author, content, publishedAt}: postProps) {
 			</form>
 			
 			<div className={style.commentList}>
-				<Comment/>
-				<Comment/>
+				{comment.map(comment => {
+					return <Comment 
+						content={comment}
+						key={comment}
+						onDelete={deleteComment}
+					/>
+				})}
 			</div>
 		</article>
 		);
