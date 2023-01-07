@@ -53,6 +53,8 @@ export function Post({author, content, publishedAt}: postProps) {
 
 		setComment(commentsWithoutDeleted);
 	}
+
+	const isTextEmpty = newCommentText.length === 0;
 	
 	return (
 		<article className={style.post}>
@@ -90,7 +92,12 @@ export function Post({author, content, publishedAt}: postProps) {
 				/>
 
 				<footer>
-					<button type='submit'>Publicar</button>
+					<button 
+						type='submit'
+						disabled={isTextEmpty}
+					>
+						Publicar
+					</button>
 				</footer>
 
 			</form>
